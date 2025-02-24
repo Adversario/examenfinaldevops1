@@ -27,7 +27,7 @@ pipeline {
         }
         stage('Post-Deployment Verification') {
             steps {
-                sh 'curl -s http://localhost:8080/endpoint_salud'
+                sh 'curl -s http://localhost:8080/'
             }
         }
     }
