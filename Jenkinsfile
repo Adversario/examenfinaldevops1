@@ -4,7 +4,7 @@ pipeline {
     // Esta sección indica a Jenkins que use la instalación de Maven configurada globalmente.
     tools {
         // "Maven3" debe coincidir con el nombre que configuraste en Global Tool Configuration.
-        maven 'Maven3'
+        maven 'Maven'
     }
 
     stages {
