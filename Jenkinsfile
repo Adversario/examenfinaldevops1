@@ -39,7 +39,7 @@ pipeline {
         stage('Post-Deployment Verification') {
             steps {
                 // Realiza una solicitud HTTP para verificar que el servicio responde correctamente
-                sh 'curl -s http://localhost:9090/endpoint_salud'
+                sh 'curl -s http://localhost:9090/actuator/health'
             }
         }
     }
