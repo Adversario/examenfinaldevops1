@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        // Asegúrate de que en Global Tool Configuration tienes una instalación JDK llamada "JDK" (que apunte a OpenJDK 21)
+        // Se asume que en Global Tool Configuration tienes configurado un JDK llamado "JDK" que apunta a OpenJDK 21
         jdk 'JDK'
         maven 'Maven'
     }
@@ -22,19 +22,21 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    // Aseguramos que JAVA_HOME esté establecido correctamente y actualizamos el PATH
+                    // Forzar la configuración de JAVA_HOME con la herramienta JDK configurada
                     env.JAVA_HOME = tool 'JDK'
                     env.PATH = "${env.JAVA_HOME}/bin:${env.PATH}"
                     sh 'echo JAVA_HOME=$JAVA_HOME'
                     sh 'java -version'
-                    // Ahora Maven debería usar el javac del JDK 21
-                    sh 'mvn clean package'
+                    // Imprime la versión de Maven para confirmar el entorno que usa Maven
+                    sh 'mvn -version'
+                    // Forzar que Maven use el JAVA_HOME actual
+                    sh 'JAVA_HOME=$JAVA_HOME mvn clean package'
                 }
             }
         }
         stage('Test') {
             steps {
-                sh 'mvn test'
+                sh 'JAVA_HOME=$JAVA_HOME mvn test'
             }
         }
         stage('Deployment') {
